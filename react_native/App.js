@@ -447,7 +447,7 @@ const RootStack = createStackNavigator(
                 headerRight: (
                     <TouchableOpacity
                         onPress={() => {
-                            navigation.navigate("AthleteProfile", {});
+                            navigation.navigate("AthleteProfile");
                         }}
                     >
                         <View>

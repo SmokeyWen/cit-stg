@@ -10,10 +10,8 @@ import {clubImagePicker} from "../utils/imagePicker"
 // }
 
 export default class Card extends Component {
-  
-                            
-                          
-    
+
+  static athl_id = null;
 
   constructor (props) {
     
@@ -28,6 +26,7 @@ export default class Card extends Component {
       
     //   cardIndex: 0
     }
+    athl_id = this.state.athl_id;
     this.getData = this.getData.bind(this);
     this.callNumber = this.callNumber.bind(this);
     this.registerVar = this.registerVar.bind(this);

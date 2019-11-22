@@ -11,13 +11,15 @@ import {
 } from "react-native";
 import { AppLoading, Font } from "expo";
 import { NavigationEvents, StackNavigator } from "react-navigation";
+import {default as CardComponent} from "./Card.js";
 import { Card } from "react-native-elements";
+
 
 export default class AthleteProfile extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            athl_id: this.props.navigation.getParam("athl_id"),
+            athl_id: CardComponent.athl_id,
             data: [],
             data2: [],
 
@@ -105,15 +107,14 @@ export default class AthleteProfile extends React.Component {
     // }
 
     render() {
-        if (this.state.data.length == 0 || this.state.data2.length == 0) {
+        if (this.state.data.length == 0) {
             return <View></View>;
         }
         // console.log(this.state.data[0]);
         // console.log(this.state.data2[0]);
-        console.log(
-            "The profile_photo Url is --> ",
-            this.state.data2[0].profile_photo
-        );
+        // console.log(
+        //     "The profile_photo Url is --> ",
+        //     this.state.data2[0].profile_photo
         return (
             <ScrollView style={styles.container}>
                 {/* <TouchableHighlight
@@ -272,6 +273,7 @@ const styles = StyleSheet.create({
         color: "#fff"
     },
     signOutButton: {
+        backgroundColor: "red",
         alignSelf: "center",
         opacity: 0.7,
         backgroundColor: "#3AD289",

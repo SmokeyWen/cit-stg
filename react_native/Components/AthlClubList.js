@@ -13,6 +13,7 @@ import {
 import CardFlip from 'react-native-card-flip';
 import { clubImagePicker } from '../utils/imagePicker';
 import { Bubbles, DoubleBounce, Bars, Pulse } from 'react-native-loader';
+import {default as CardComponent} from "./Card.js";
 
 export default class AthlClubList extends React.Component {
     constructor(props) {
@@ -20,7 +21,8 @@ export default class AthlClubList extends React.Component {
         this.state = {
           matchedList:[],
             loading: true,
-            showMe: true
+            showMe: true,
+            athl_id: CardComponent.athl_id
         };
         this.RegisterVar = this.RegisterVar.bind(this);
     }

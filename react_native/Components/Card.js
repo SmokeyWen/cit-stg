@@ -9,11 +9,8 @@ import {clubImagePicker} from "../utils/imagePicker"
 //   }
 // }
 
-export default class Card extends Component {
-
-  static athl_id = null;
-
-  constructor (props) {
+export default class Card extends Component {               
+    constructor (props) {
     
     super(props)
     this.state = {
@@ -29,20 +26,79 @@ export default class Card extends Component {
     athl_id = this.state.athl_id;
     this.getData = this.getData.bind(this);
     this.callNumber = this.callNumber.bind(this);
-    this.registerVar = this.registerVar.bind(this);
+    // this.registerVar = this.registerVar.bind(this);
+    console.log("ATHLETE ID IN CARDS --------------------------", this.state.athl_id)
+    global.athl_id = this.state.athl_id
     
   }
 
-  registerVar() {
-    const { navigation } = this.props
-    const new_id = navigation.getParam('athl_id','none')
-    console.log(new_id);
 
-    this.setState({
-      athl_id: new_id
-    })
-    console.log('id set to ' + this.state.athl_id);
+  static navigationOptions = ( {navigation} ) => {
+    const {params = {}} = navigation.state;
+    return{
+    gesturesEnabled: false,
+    headerTitle: (
+        <TouchableOpacity style={{alignSelf: "center", marginRight: "auto", marginLeft: "auto"}}>
+            <View>
+                <Image
+                    style={{
+                        justifyContent: "center",
+                        height: 40,
+                        width: 40,
+                        resizeMode: "contain",
+                        
+                    }}
+                    source={require("../Icons/heart_active.png")}
+                />
+            </View>
+        </TouchableOpacity>
+    ),
+    headerRight: (
+        <TouchableOpacity
+            onPress={() => {
+                navigation.navigate("AthleteProfile", {athl_id: params.athl_id})}}
+        >
+            <View>
+                <Image
+                    style={{
+                        justifyContent: "center",
+                        height: 30,
+                        width: 30
+                    }}
+                    source={require("../Icons/profile_inactive.png")}
+                />
+            </View>
+        </TouchableOpacity>
+    ),
+    headerLeft: (
+        <TouchableOpacity
+            onPress={() => {
+                navigation.navigate("AthlClubList",  {athl_id: params.athl_id})}}
+        >
+            <View>
+                <Image
+                    style={{    
+                        justifyContent: "center",
+                        height: 30,
+                        width: 30
+                    }}
+                    source={require("../Icons/list_inactive.png")}
+                />
+            </View>
+        </TouchableOpacity>
+    )
   }
+}
+  // registerVar() {
+  //   const { navigation } = this.props
+  //   const new_id = navigation.getParam('athl_id','none')
+  //   console.log(new_id);
+
+  //   this.setState({
+  //     athl_id: new_id
+  //   })
+  //   console.log('id set to ' + this.state.athl_id + ' in cards');
+  // }
 
   // https://stackoverflow.com/questions/51545064/how-to-make-phone-call-in-react-native
   callNumber = phone => {
@@ -66,6 +122,7 @@ export default class Card extends Component {
     };
 
   getData() {
+    console.log(this.state.athl_id, "---------------athlete id in getdata function in cards")
     return fetch('http://54.191.100.200:8080/api/recommendations/athlete/' + this.state.athl_id)
       .then((response) => response.json())
       .then((responseJson) => {
@@ -89,7 +146,14 @@ export default class Card extends Component {
 
   componentDidMount(){
       this.getData();
+      console.log(this.state.athl_id, "------------------------inside componentdidmount using getData")
       console.log('data loaded');
+
+      this.props.navigation.setParams({
+        athl_id: this.state.athl_id
+       })
+
+       console.log(this.state.athl_id ,"------------------------------in cards")
   }
 
 
@@ -337,7 +401,8 @@ const styles = StyleSheet.create({
     width: "57%",
     padding: 13,
     marginLeft: "21%",
-    marginTop: 545,
+    // marginTop: 545,
+    top: 650,
     borderRadius: 2,
     justifyContent: "center",
     alignItems: "center",

@@ -183,6 +183,7 @@ const deleteAthleteById = (inputId) => {
 const verifyAthlete = (acc, pw) => {
   let query = `SELECT athl_id, athl_fname, athl_lname FROM athletes WHERE account=? AND password=?`;
   query = mysql.format(query,[acc,pw]);
+  console.log("veryfyAthlete() ", query);
   return new Promise((resolve, reject) => {
     pool.query(query, (err, results, fields) => {        
         if (err) reject(err);
@@ -195,12 +196,12 @@ const verifyAthlete = (acc, pw) => {
 }
 
 const validateAccount = (acc) => {
-  let query = `select * from athletes where account=?`;
+  let query = "select * from athletes where account=?";
   query = mysql.format(query, acc);
   return new Promise((resolve, reject) => {
     pool.query(query, (err, results, fields) => {
       if (err) reject(err);
-      if (results.length) resolve(false);
+      if (!results.length) resolve(false);
       else resolve(true);
     })
   })
